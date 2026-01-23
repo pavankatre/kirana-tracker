@@ -21,11 +21,11 @@
 <div class="inventory-grid">
   @for (item of filteredItems(); track item.id) {
     <mat-card class="item-card" [class.low-stock-alert]="item.stockCount <= item.minThreshold">
-      <div class="card-accent" [style.background-color]="getStatusColor(item)"></div>
+      <div class="card-accent" [style.background-color]="viewService.getStatusColor(item)"></div>
       
       <mat-card-header>
         <div mat-card-avatar class="category-icon">
-          <mat-icon>{{ getCategoryIcon(item.category) }}</mat-icon>
+          <mat-icon>{{ viewService.getCategoryIcon(item.category) }}</mat-icon>
         </div>
         <mat-card-title>{{ item.name }}</mat-card-title>
         <mat-card-subtitle>{{ item.category }}</mat-card-subtitle>

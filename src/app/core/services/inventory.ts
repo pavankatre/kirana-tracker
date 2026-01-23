@@ -61,14 +61,7 @@ export class InventoryService {
     this.items().filter(item => item.stockCount <= item.minThreshold)
   );
 
-  // Renamed from useItem to consumeItem to fix your HTML error
- // consumeItem(id: string) {
-  //   this.itemsSignal.update(items => 
-  //     items.map(item => 
-  //       item.id === id ? { ...item, stockCount: Math.max(0, item.stockCount - 1) } : item
-  //     )
-  //   );
-  // }
+
   consumeItem(id: string) {
   this.itemsSignal.update(items => 
     items.map(item => 
@@ -80,14 +73,22 @@ export class InventoryService {
 }
 
   // Adding this now so you can use the "+" button later
-  addStock(id: string) {
-    this.itemsSignal.update(items => 
-      items.map(item => 
-        item.id === id ? { ...item, stockCount: item.stockCount + 1 } : item
-      )
-    );
-  }
-
+  // addStock(id: string) {
+  //   this.itemsSignal.update(items => 
+  //     items.map(item => 
+  //       item.id === id ? { ...item, stockCount: item.stockCount + 1 } : item
+  //     )
+  //   );
+  // }
+addStock(id: string) {
+  this.itemsSignal.update(items => 
+    items.map(item => 
+      item.id === id 
+        ? { ...item, stockCount: item.stockCount + 1, lastUpdated: new Date() } // Added timestamp
+        : item
+    )
+  );
+}
 
   updateStock(id: string, newQuantity: number) {
   this.itemsSignal.update(items =>
