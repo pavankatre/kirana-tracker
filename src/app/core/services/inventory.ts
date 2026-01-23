@@ -87,4 +87,15 @@ export class InventoryService {
       )
     );
   }
+
+
+  updateStock(id: string, newQuantity: number) {
+  this.itemsSignal.update(items =>
+    items.map(item =>
+      item.id === id 
+        ? { ...item, stockCount: newQuantity, lastUpdated: new Date() } 
+        : item
+    )
+  );
+}
 }
