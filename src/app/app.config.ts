@@ -1,11 +1,16 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter, withComponentInputBinding, withViewTransitions, withHashLocation } from '@angular/router';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
+    // 1. Correct Router configuration
+    provideRouter(
+      routes, 
+      withComponentInputBinding(), 
+      withViewTransitions(),
+      withHashLocation() // Highly recommended for GitHub Pages to prevent 404s
+    ),
+    
   ]
 };
