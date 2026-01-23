@@ -118,3 +118,17 @@ mat-card-actions {
     color: #666;
   }
 }
+
+
+.add-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  // Optional: adds a slight glow if there is low stock
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.inventory-grid {
+  padding-bottom: 80px; // Ensure the last cards aren't hidden behind the FAB
+}

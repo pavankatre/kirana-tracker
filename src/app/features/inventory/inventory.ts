@@ -12,10 +12,11 @@ import { KiranaItem } from '../../models/kirana-item';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InventoryViewService } from './service/inventory-view';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule , StockForm , MatFormFieldModule , MatInputModule ,MatProgressBarModule, MatTooltipModule ],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule , StockForm , MatFormFieldModule , MatInputModule ,MatProgressBarModule, MatTooltipModule , RouterModule ],
   providers: [InventoryViewService],
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss',

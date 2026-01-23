@@ -97,4 +97,21 @@ updateStock(id: string, addedQuantity: number) {
     )
   );
 }
+
+// addItem(item: KiranaItem) {
+//   this.itemsSignal.update(currentItems => [...currentItems, item]);
+// }
+
+addItem(newItem: Omit<KiranaItem, 'id' | 'lastUpdated'>) {
+  this.itemsSignal.update(items => [
+    ...items,
+    {
+      ...newItem,
+      id: Date.now().toString(), // Simple unique ID generator
+      lastUpdated: new Date()
+    }
+  ]);
+}
+
+
 }
