@@ -1,0 +1,12 @@
+// Inside item-table.component.ts
+  .stock-critical { 
+    color: #d93025 !important; 
+    font-weight: 600; 
+  }
+  .stock-low { 
+    color: #f29900 !important; 
+    font-weight: 600; 
+  }
+  .stock-good { 
+    color: #188038 !important; 
+  }
