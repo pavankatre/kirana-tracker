@@ -1,0 +1,35 @@
+[
+  {
+    "key": "name",
+    "label": "Product Name",
+    "type": "text",
+    "placeholder": "e.g. Maggi Noodles",
+    "defaultValue": "",
+    "validations": { "required": true, "minLength": 3, "maxLength": 50 }
+  },
+  {
+    "key": "category",
+    "label": "Category",
+    "type": "select",
+    "placeholder": "Select a category",
+    "options": ["Groceries", "Dairy", "Household"],
+    "defaultValue": "Groceries",
+    "validations": { "required": true }
+  },
+  {
+    "key": "stockCount",
+    "label": "Current Stock",
+    "type": "number",
+    "placeholder": "Enter initial stock quantity",
+    "defaultValue": 0,
+    "validations": { "required": true, "min": 0 }
+  },
+  { 
+    "key": "minThreshold", 
+    "label": "Low Stock Alert", 
+    "type": "number", 
+    "placeholder": "Minimum stock before alert",
+    "defaultValue": 2,
+    "validations": { "required": true, "min": 1 } 
+  } 
+]
