@@ -6,13 +6,29 @@
 
   <span class="spacer"></span>
 
-  <button mat-button routerLink="/dashboard" class="nav-link">
-    <mat-icon>dashboard</mat-icon> Dashboard
+  <div class="desktop-nav">
+    <button mat-button routerLink="/dashboard" class="nav-link">
+      <mat-icon>dashboard</mat-icon> Dashboard
+    </button>
+    <button mat-button routerLink="/inventory" class="nav-link">
+      <mat-icon>list</mat-icon> Inventory
+    </button>
+  </div>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="mobile-menu-btn">
+    <mat-icon>menu</mat-icon>
   </button>
-  
-  <button mat-button routerLink="/inventory" class="nav-link">
-    <mat-icon>list</mat-icon> Inventory
-  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/dashboard">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </button>
+    <button mat-menu-item routerLink="/inventory">
+      <mat-icon>list</mat-icon>
+      <span>Inventory</span>
+    </button>
+  </mat-menu>
 
   <button mat-icon-button>
     <mat-icon>account_circle</mat-icon>

@@ -1,0 +1,43 @@
+
+<form [formGroup]="stockForm" (ngSubmit)="submit()" class="shared-stock-form">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category" (selectionChange)="onCategoryChange($event.value)">
+      @for (cat of categories(); track cat) {
+        <mat-option [value]="cat">{{cat}}</mat-option>
+      }
+    </mat-select>
+    @if (f.category.touched && f.category.invalid) {
+      <mat-error>Select a category</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+  <mat-label>Item Name</mat-label>
+  <input type="text" matInput formControlName="itemName" [matAutocomplete]="auto">
+  
+  <mat-autocomplete #auto="matAutocomplete" 
+                  [displayWith]="displayFn" 
+                  (optionSelected)="onItemSelect($event.option.value)">
+    @for (item of filteredItems; track item.id) {
+      <mat-option [value]="item">{{item.name}}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Add Quantity</mat-label>
+    <input type="number" matInput formControlName="quantity">
+    @if (f.quantity.errors?.['min']) {
+      <mat-error>Must be more than 0</mat-error>
+    }
+    @if (f.quantity.touched && f.quantity.errors?.['required']) {
+      <mat-error>Quantity is required</mat-error>
+    }
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" [disabled]="stockForm.invalid">
+    Update Stock
+  </button>
+</form>
