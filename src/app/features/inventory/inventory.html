@@ -1,0 +1,30 @@
+<div class="inventory-grid">
+  @for (item of inventory.items(); track item.id) {
+    <mat-card class="item-card">
+      <mat-card-header>
+        <mat-card-title>{{ item.name }}</mat-card-title>
+        <mat-card-subtitle>{{ item.category }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stock-display">
+          <span class="label">Current Stock:</span>
+          <!-- <mat-chip [color]="item.stockCount <= item.minThreshold ? 'warn' : 'primary'"  selected highlighted>
+            {{ item.stockCount }}
+          </mat-chip> -->
+            <mat-chip class="stock-chip" [ngClass]="{'low-stock': item.stockCount <= item.minThreshold}">
+              {{ item.stockCount }}
+            </mat-chip>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-stroked-button color="warn" (click)="inventory.consumeItem(item.id)">
+          <mat-icon>remove</mat-icon> Use One
+        </button>
+        <button mat-flat-button color="primary" (click)="inventory.addStock(item.id)">
+          <mat-icon>add</mat-icon> Add Stock
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>

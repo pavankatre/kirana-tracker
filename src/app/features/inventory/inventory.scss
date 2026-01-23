@@ -1,0 +1,64 @@
+// Container to hold all cards
+.inventory-grid {
+  display: grid;
+  // This makes the grid responsive: 1 column on mobile, 3+ on desktop
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 8px;
+}
+
+// Styling for each item card
+.item-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px); // Lift card up slightly on hover
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Stock count display section
+.stock-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 12px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+
+  .label {
+    font-weight: 500;
+    color: #475569;
+  }
+}
+
+// Footer section for buttons
+mat-card-actions {
+  padding: 16px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 8px;
+}
+
+// Styling for the date text
+.update-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 8px;
+  display: block;
+  text-align: right;
+}
+
+.stock-chip {
+  background-color: #e0e0e0; // Default grey
+}
+
+// When stock is low, force it to Red
+.low-stock {
+  background-color: #f44336 !important; // Material Red
+  color: white !important;
+}
