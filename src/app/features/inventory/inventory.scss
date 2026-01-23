@@ -1,0 +1,134 @@
+// Container to hold all cards
+.inventory-grid {
+  display: grid;
+  // This makes the grid responsive: 1 column on mobile, 3+ on desktop
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 8px;
+}
+
+// Styling for each item card
+.item-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-4px); // Lift card up slightly on hover
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Stock count display section
+.stock-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 12px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+
+  .label {
+    font-weight: 500;
+    color: #475569;
+  }
+}
+
+// Footer section for buttons
+mat-card-actions {
+  padding: 16px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 8px;
+}
+
+// Styling for the date text
+.update-date {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 8px;
+  display: block;
+  text-align: right;
+}
+
+.stock-chip {
+  background-color: #e0e0e0; // Default grey
+}
+
+// When stock is low, force it to Red
+.low-stock {
+  background-color: #f44336 !important; // Material Red
+  color: white !important;
+}
+
+.item-card {
+  border-left: 5px solid transparent;
+  &.low-stock-border { border-left-color: #f44336; } // Red
+  &.out-of-stock-border { border-left-color: #000; } // Black
+}
+
+
+
+.item-card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  // The colored stripe on the side
+  .card-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    z-index: 10;
+  }
+
+  .stock-status-container {
+    margin-top: 15px;
+    
+    .stock-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+
+      .stock-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .stock-label {
+        font-size: 0.8rem;
+        color: #666;
+      }
+    }
+  }
+}
+
+.category-icon {
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mat-icon {
+    color: #666;
+  }
+}
+
+
+.add-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  // Optional: adds a slight glow if there is low stock
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.inventory-grid {
+  padding-bottom: 80px; // Ensure the last cards aren't hidden behind the FAB
+}

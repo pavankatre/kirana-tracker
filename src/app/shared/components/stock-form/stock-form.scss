@@ -1,0 +1,38 @@
+.shared-stock-form {
+  display: flex;
+  flex-wrap: wrap; // Allows wrapping on small mobile screens
+  gap: 16px;       // Consistent spacing between fields
+  align-items: center; // Vertically centers the button with the fields
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+
+  mat-form-field {
+    flex: 1;       // Makes fields grow equally
+    min-width: 200px; // Prevents fields from getting too squashed
+    
+    // Removes bottom padding reserved for hints/errors to keep it compact
+    &.mat-form-field-appearance-outline .mat-mdc-form-field-subscript-wrapper {
+        height: 0; 
+    }
+  }
+
+  button {
+    height: 56px;  // Matches the standard height of Material outline fields
+    padding: 0 24px;
+    font-weight: 500;
+    margin-bottom: 20px; // Adjusts for the field subscript height gap
+  }
+}
+
+// Mobile Responsive: Stack fields on very small screens
+@media (max-width: 600px) {
+  .shared-stock-form {
+    flex-direction: column;
+    align-items: stretch;
+
+    button {
+      margin-bottom: 0;
+    }
+  }
+}

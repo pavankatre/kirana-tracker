@@ -1,0 +1,30 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.nav-link {
+  margin-left: 8px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Logic for hiding/showing elements
+.mobile-menu-btn {
+  display: none; // Hidden by default (Desktop)
+}
+
+.desktop-nav {
+  display: flex; // Shown by default (Desktop)
+}
+
+// Media Query for Small Viewports (Mobile/Tablets)
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none; // Hide full buttons
+  }
+
+  .mobile-menu-btn {
+    display: block; // Show hamburger icon
+  }
+}
