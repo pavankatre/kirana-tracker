@@ -72,14 +72,6 @@ export class InventoryService {
   );
 }
 
-  // Adding this now so you can use the "+" button later
-  // addStock(id: string) {
-  //   this.itemsSignal.update(items => 
-  //     items.map(item => 
-  //       item.id === id ? { ...item, stockCount: item.stockCount + 1 } : item
-  //     )
-  //   );
-  // }
 addStock(id: string) {
   this.itemsSignal.update(items => 
     items.map(item => 
@@ -90,11 +82,17 @@ addStock(id: string) {
   );
 }
 
-  updateStock(id: string, newQuantity: number) {
+// Use this if you want the form to ADD to current stock
+updateStock(id: string, addedQuantity: number) {
   this.itemsSignal.update(items =>
     items.map(item =>
       item.id === id 
-        ? { ...item, stockCount: newQuantity, lastUpdated: new Date() } 
+        ? { 
+            ...item, 
+            // We take the existing stock and ADD the new amount
+            stockCount: Number(item.stockCount) + Number(addedQuantity), 
+            lastUpdated: new Date() 
+          } 
         : item
     )
   );
