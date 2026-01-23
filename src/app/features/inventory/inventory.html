@@ -1,38 +1,6 @@
-<!-- <div class="inventory-grid">
-  @for (item of inventory.items(); track item.id) {
-    <mat-card class="item-card">
-      <mat-card-header>
-        <mat-card-title>{{ item.name }}</mat-card-title>
-        <mat-card-subtitle>{{ item.category }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stock-display">
-          <span class="label">Current Stock:</span>
-            <mat-chip class="stock-chip" [ngClass]="{'low-stock': item.stockCount <= item.minThreshold}">
-              {{ item.stockCount }}
-            </mat-chip>
-        </div>
-      </mat-card-content>
-
-      <mat-card-actions align="end">
-        <button mat-stroked-button color="warn" (click)="inventory.consumeItem(item.id)">
-          <mat-icon>remove</mat-icon> Use One
-        </button>
-        <button mat-flat-button color="primary" (click)="inventory.addStock(item.id)">
-          <mat-icon>add</mat-icon> Add Stock
-        </button>
-      </mat-card-actions>
-    </mat-card>
-  }
-</div> -->
-
-
-
-
-
 <app-stock-form 
   [categories]="categories()" 
-  [items]="inventory.items()" 
+  [items]="inventoryService.items()" 
   (onUpdate)="handleStockUpdate($event)">
 </app-stock-form>
 
@@ -78,10 +46,10 @@
       </mat-card-content>
 
       <mat-card-actions align="end">
-         <button mat-icon-button color="warn" (click)="inventory.consumeItem(item.id)" matTooltip="Decrease">
+         <button mat-icon-button color="warn" (click)="inventoryService.consumeItem(item.id)" matTooltip="Decrease">
            <mat-icon>remove_circle_outline</mat-icon>
          </button>
-         <button mat-icon-button color="primary" (click)="inventory.addStock(item.id)" matTooltip="Quick Add">
+         <button mat-icon-button color="primary" (click)="inventoryService.addStock(item.id)" matTooltip="Quick Add">
            <mat-icon>add_circle_outline</mat-icon>
          </button>
       </mat-card-actions>
