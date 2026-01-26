@@ -1,0 +1,7 @@
+{
+    "required": "{label} is required.",
+    "minlength": "Must be at least {minLength} characters.",
+    "maxlength": "Must be at most {maxLength} characters.",
+    "min": "Value cannot be less than {min}.",
+    "default": "Invalid value for {label}."
+}

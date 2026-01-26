@@ -81,6 +81,9 @@ import { KiranaItem } from '../../../models/kirana-item';
  */
 import inventorySchema from '../../../../assets/data/inventory-schema.json';
 
+// Add this import to your existing service
+import validationMessages from '../../../../assets/data/validation-messages.json';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -93,6 +96,8 @@ export class NewItemService {
 
   // Root form group initialized as empty; populated in constructor
   public form: FormGroup = this.fb.group({});
+
+  private errorLibrary: any = validationMessages;
 
   constructor() {
     this.initializeForm();
@@ -179,5 +184,31 @@ export class NewItemService {
     if (config.min !== undefined) validators.push(Validators.min(config.min));
     
     return validators;
+  }
+
+
+  getErrorMessage(field: any): string {
+    const control = this.form.get(field.key);
+    if (!control || !control.errors) return '';
+
+    // Get the first error key (e.g., 'required')
+    const errorKey = Object.keys(control.errors)[0];
+    let message = this.errorLibrary[errorKey] || this.errorLibrary['default'];
+
+    // Professional touch: Replace placeholders like {label} or {min} with real values
+    message = message.replace('{label}', field.label);
+    
+    const errorValue = control.errors[errorKey];
+    if (typeof errorValue === 'object') {
+       // For errors like minLength, it replaces {minlength} with the actual required length
+       const requirementKey = Object.keys(errorValue).find(k => k !== 'actual');
+       if (requirementKey) {
+         message = message.replace(`{${errorKey}}`, errorValue[requirementKey]);
+       }
+    } else {
+       message = message.replace(`{${errorKey}}`, errorValue);
+    }
+
+    return message;
   }
 }

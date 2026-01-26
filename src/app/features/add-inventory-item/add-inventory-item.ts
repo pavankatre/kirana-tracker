@@ -17,22 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class AddInventoryItem {
 public newItemService = inject(NewItemService);
-  private router = inject(Router);
-
-
-
-private fb = inject(FormBuilder);
-  //private inventoryService = inject(InventoryService);
-
-  // Reusing your existing categories
-  categories = ['Groceries', 'Personal Care', 'Dairy', 'Grains', 'Household'];
-
-  addForm = this.fb.group({
-    name: ['', Validators.required],
-    category: ['', Validators.required],
-    stockCount: [0, [Validators.required, Validators.min(0)]],
-    minThreshold: [2, [Validators.required, Validators.min(1)]]
-  });
+private router = inject(Router);
 
   onSubmit() {
     if (this.newItemService.saveNewItem()) {
