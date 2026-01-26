@@ -74,7 +74,7 @@
           <input matInput [type]="field.type" [formControlName]="field.key" [placeholder]="field.placeholder">
         }
 
-        @if (newItemService.form.get(field.key)?.invalid && newItemService.form.get(field.key)?.touched) {
+        <!-- @if (newItemService.form.get(field.key)?.invalid && newItemService.form.get(field.key)?.touched) {
           <mat-error>
             @if (newItemService.form.get(field.key)?.errors?.['required']) {
               {{ field.label }} is required.
@@ -86,6 +86,12 @@
               Value cannot be less than {{ field.validations?.min }}.
             }
           </mat-error>
+        } -->
+
+        @if (newItemService.form.get(field.key)?.invalid && newItemService.form.get(field.key)?.touched) {
+        <mat-error>
+          {{ newItemService.getErrorMessage(field) }}
+        </mat-error>
         }
       </mat-form-field>
 
