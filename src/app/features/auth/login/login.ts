@@ -25,6 +25,8 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  buttonTransform = '';
+  isPasswordFocused = false;
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -59,4 +61,16 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigate(['/register']);
   }
+
+  moveButton() {
+    // Only move if the form is invalid
+    if (this.loginForm.invalid) {
+      const x = Math.floor(Math.random() * 200) - 100; // Move between -100px and 100px
+      const y = Math.floor(Math.random() * 100) - 75;  // Move between -50px and 50px
+      this.buttonTransform = `translate(${x}px, ${y}px)`;
+    } else {
+      // Reset position if form becomes valid
+      this.buttonTransform = 'translate(0, 0)';
+    }
+}
 }

@@ -1,0 +1,86 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  // Using the high-contrast gradient from your login page
+  background: linear-gradient(135deg, #1e1345 0%, #9b1d20 50%, #f1a21e 100%);
+  padding: 20px;
+
+  mat-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 30px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9); // Semi-transparent white
+    backdrop-filter: blur(10px); // Frosted glass effect
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    h2 {
+      color: #1e1345;
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 5px; // Tight gap for a cleaner look
+
+      mat-form-field {
+        width: 100%;
+
+        // Customizing the outline color to match your theme
+        &.mat-form-field-appearance-outline .mat-mdc-text-field-wrapper {
+          background-color: white;
+          border-radius: 12px;
+        }
+      }
+
+      button {
+        margin-top: 20px;
+        height: 55px;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        background-color: #1e1345;
+        transition: transform 0.2s ease;
+
+        &:hover:not([disabled]) {
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(30, 19, 69, 0.3);
+        }
+
+        &:disabled {
+          background-color: #ccc;
+        }
+      }
+    }
+  }
+}
+mat-error {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+
+.mismatch-error {
+  color: #ff4757 !important; // High-visibility red
+}
+// Mobile responsiveness
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 10px;
+    mat-card {
+      padding: 30px 20px;
+      border-radius: 15px;
+    }
+  }
+}
