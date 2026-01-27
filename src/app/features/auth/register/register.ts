@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +23,7 @@ export class Register {
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -40,6 +42,7 @@ export class Register {
   onRegister() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value);
+      this.router.navigate(['/login']);
     }
   }
 
