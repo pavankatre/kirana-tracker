@@ -30,9 +30,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   
   // 2. Check if the LocalStorage actually has the key 
   // (Prevents "Ghost Users" if someone manually cleared storage)
-  const sessionExists = !!localStorage.getItem('kirana_session');
+  const sessionExists = !!localStorage.getItem('token');
 
-  if (userInEmail && sessionExists) {
+  if (sessionExists) {
     return true; 
   } else {
     // If one is missing, clean up the other to stay in sync

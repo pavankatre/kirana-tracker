@@ -33,13 +33,32 @@ export class LoginComponent {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
+  // onLogin() {
+  //   if (this.loginForm.valid) {
+  //     this.authService.login(this.loginForm.value);
+  //     // Navigate to dashboard or return URL after successful login
+  //     this.router.navigate(['/inventory']);
+  //   }
+  // }
+
   onLogin() {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value);
-      // Navigate to dashboard or return URL after successful login
-      this.router.navigate(['/inventory']);
-    }
+  if (this.loginForm.valid) {
+    // 1. Call the service and SUBSCRIBE to the result
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
+        
+        // 2. Only navigate AFTER the backend confirms success
+        this.router.navigate(['/inventory']);
+      },
+      error: (err) => {
+        // 3. Handle errors (e.g., wrong password)
+        console.error('Login failed:', err);
+        alert(err.error?.message || 'Invalid credentials');
+      }
+    });
   }
+}
 
 
   getErrorMessage(controlName: string): string {

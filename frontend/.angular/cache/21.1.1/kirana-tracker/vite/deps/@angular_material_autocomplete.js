@@ -7,10 +7,10 @@ import {
   MatOptionSelectionChange,
   _countGroupLabelsBeforeOption,
   _getOptionScrollPosition
-} from "./chunk-IVXREJWA.js";
+} from "./chunk-YHJSNJLA.js";
 import {
   MAT_FORM_FIELD
-} from "./chunk-FYD7A7MJ.js";
+} from "./chunk-H2C3NZCY.js";
 import {
   OverlayConfig,
   OverlayModule,
@@ -18,12 +18,8 @@ import {
   createFlexibleConnectedPositionStrategy,
   createOverlayRef,
   createRepositionScrollStrategy
-} from "./chunk-DND3V6LA.js";
-import {
-  CdkScrollableModule,
-  ViewportRuler
-} from "./chunk-H24RXOXB.js";
-import "./chunk-YDD2MKW2.js";
+} from "./chunk-PXGIPNWS.js";
+import "./chunk-PAMHTWDD.js";
 import {
   ActiveDescendantKeyManager,
   DOWN_ARROW,
@@ -35,36 +31,42 @@ import {
   addAriaReferencedId,
   hasModifierKey,
   removeAriaReferencedId
-} from "./chunk-N553E5JR.js";
+} from "./chunk-5I7FSIYG.js";
+import "./chunk-42QFQP6S.js";
 import {
   _getEventTarget,
   _getFocusedElementPierceShadowDom
-} from "./chunk-DLGN4JIT.js";
-import "./chunk-42QFQP6S.js";
-import "./chunk-N7U5W3GO.js";
-import "./chunk-WCUYZQDA.js";
+} from "./chunk-L7KVDTGW.js";
+import "./chunk-5DZKKNRT.js";
+import "./chunk-D2R2LYJH.js";
 import {
   BreakpointObserver,
   Breakpoints,
   _animationsDisabled
-} from "./chunk-OR5JSUXO.js";
+} from "./chunk-WFU2HNJH.js";
 import {
   coerceArray
 } from "./chunk-N4DOILP3.js";
-import "./chunk-Y255LFGD.js";
-import "./chunk-GUGIMSVJ.js";
-import "./chunk-2KKZD5DJ.js";
 import {
-  Platform
-} from "./chunk-OIH3W5GZ.js";
+  CdkScrollableModule,
+  ViewportRuler
+} from "./chunk-CRCPDRR3.js";
+import "./chunk-GUGIMSVJ.js";
 import {
   BidiModule,
   Directionality
-} from "./chunk-PSKK2XEI.js";
+} from "./chunk-WEYMYVZY.js";
+import "./chunk-FVCK4YOA.js";
+import "./chunk-HAH7QN5Q.js";
+import {
+  Platform
+} from "./chunk-VWJRI5UY.js";
+import "./chunk-WTV7SLV6.js";
 import {
   NG_VALUE_ACCESSOR
-} from "./chunk-7ZKUUVM2.js";
-import "./chunk-OZVJYULY.js";
+} from "./chunk-NER5SHMC.js";
+import "./chunk-6YXZTGDI.js";
+import "./chunk-P4CLNMCZ.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -79,30 +81,17 @@ import {
   Input,
   NgModule,
   NgZone,
-  Observable,
   Output,
   Renderer2,
-  Subject,
-  Subscription,
   TemplateRef,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
   afterNextRender,
   booleanAttribute,
-  defer,
-  delay,
-  filter,
   forwardRef,
   inject,
-  map,
-  merge,
-  of,
   setClassMetadata,
-  startWith,
-  switchMap,
-  take,
-  tap,
   ɵɵNgOnChangesFeature,
   ɵɵProvidersFeature,
   ɵɵattribute,
@@ -124,7 +113,22 @@ import {
   ɵɵprojectionDef,
   ɵɵqueryRefresh,
   ɵɵviewQuery
-} from "./chunk-MN2FPEI2.js";
+} from "./chunk-B7MGNQ3Z.js";
+import {
+  Observable,
+  Subject,
+  Subscription,
+  defer,
+  delay,
+  filter,
+  map,
+  merge,
+  of,
+  startWith,
+  switchMap,
+  take,
+  tap
+} from "./chunk-RSS3ODKE.js";
 import "./chunk-46DXP6YY.js";
 
 // node_modules/@angular/material/fesm2022/autocomplete.mjs

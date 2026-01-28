@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class UserStorageService {
-  private readonly USER_KEY = 'kirana_session';
+  private readonly USER_KEY = 'user';
   
   // Using a Signal so the Navbar/UI updates automatically when the user logs in
   public currentUser = signal<any>(this.getUserFromStorage());
