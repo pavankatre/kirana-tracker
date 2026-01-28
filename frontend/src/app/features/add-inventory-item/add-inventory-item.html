@@ -1,0 +1,110 @@
+<!-- <div class="form-container mat-elevation-z3">
+  <h2>Add New Product to Inventory</h2>
+  
+  <form [formGroup]="newItemService.form" (ngSubmit)="onSubmit()">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="name" placeholder="e.g. Maggi Noodles">
+      
+      @if (newItemService.form.get('name')?.invalid && newItemService.form.get('name')?.touched) {
+        <mat-error>Product name is required (min 2 characters)</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        @for (cat of categories; track cat) {
+          <mat-option [value]="cat">{{cat}}</mat-option>
+        }
+      </mat-select>
+      @if (newItemService.form.get('category')?.invalid && newItemService.form.get('category')?.touched) {
+        <mat-error>Please select a category</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Initial Stock</mat-label>
+        <input matInput type="number" formControlName="stockCount">
+        @if (newItemService.form.get('stockCount')?.invalid && newItemService.form.get('stockCount')?.touched) {
+          <mat-error>Must be 0 or more</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Low Stock Alert Level</mat-label>
+        <input matInput type="number" formControlName="minThreshold">
+        @if (newItemService.form.get('minThreshold')?.invalid && newItemService.form.get('minThreshold')?.touched) {
+          <mat-error>Threshold must be at least 1</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button mat-button type="button" (click)="newItemService.form.reset()">Clear</button>
+      
+      <button mat-raised-button color="primary" [disabled]="newItemService.form.invalid">
+        <mat-icon>save</mat-icon> Add Item
+      </button>
+    </div>
+  </form>
+</div> -->
+
+
+
+<div class="form-container mat-elevation-z3">
+  <h2>Add New Product</h2>
+
+  <form [formGroup]="newItemService.form" (ngSubmit)="onSubmit()">
+    
+    @for (field of newItemService.formConfig; track field.key) {
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ field.label }}</mat-label>
+
+        @if (field.type === 'select') {
+          <mat-select [formControlName]="field.key" [placeholder]="field.placeholder">
+            @for (opt of field.options; track opt) {
+              <mat-option [value]="opt">{{ opt }}</mat-option>
+            }
+          </mat-select>
+        } @else {
+          <input matInput [type]="field.type" [formControlName]="field.key" [placeholder]="field.placeholder">
+        }
+
+        <!-- @if (newItemService.form.get(field.key)?.invalid && newItemService.form.get(field.key)?.touched) {
+          <mat-error>
+            @if (newItemService.form.get(field.key)?.errors?.['required']) {
+              {{ field.label }} is required.
+            }
+            @if (newItemService.form.get(field.key)?.errors?.['minlength']) {
+              Must be at least {{ field.validations?.minLength }} characters.
+            }
+            @if (newItemService.form.get(field.key)?.errors?.['min']) {
+              Value cannot be less than {{ field.validations?.min }}.
+            }
+          </mat-error>
+        } -->
+
+        @if (newItemService.form.get(field.key)?.invalid && newItemService.form.get(field.key)?.touched) {
+        <mat-error>
+          {{ newItemService.getErrorMessage(field) }}
+        </mat-error>
+        }
+      </mat-form-field>
+
+    } <div class="actions">
+      <button mat-button type="button" (click)="newItemService.form.reset()">Clear</button>
+      <!-- <button mat-raised-button color="primary" [disabled]="newItemService.form.invalid">
+        <mat-icon>save</mat-icon> Save Product
+      </button> -->
+
+      <button mat-raised-button color="primary" [disabled]="newItemService.form.invalid || isSubmitting">
+        <mat-icon *ngIf="!isSubmitting">save</mat-icon>
+        <span>{{ isSubmitting ? 'Saving...' : 'Save Product' }}</span>
+      </button>
+    </div>
+  </form>
+</div>

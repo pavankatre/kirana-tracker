@@ -1,0 +1,73 @@
+
+
+<div class="header-actions">
+  <mat-form-field appearance="outline" class="search-bar">
+    <mat-label>Search Inventory (Name or Category)</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input matInput [value]="searchTerm()" (input)="updateSearch($event)">
+  </mat-form-field>
+
+  <button mat-fab color="primary" class="add-fab" routerLink="/add-item" matTooltip="Add New Item">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<app-stock-form 
+  [categories]="categories()" 
+  [items]="inventoryService.items()" 
+  (onUpdate)="handleStockUpdate($event)">
+</app-stock-form>
+
+<div class="inventory-grid">
+  @for (item of filteredItems(); track item._id || item.id || item.name) {
+    <mat-card class="item-card" [class.low-stock-alert]="item.stockCount <= item.minThreshold">
+      <div class="card-accent" [style.background-color]="viewService.getStatusColor(item)"></div>
+      
+      <mat-card-header>
+        <div mat-card-avatar class="category-icon">
+          <mat-icon>{{ viewService.getCategoryIcon(item.category) }}</mat-icon>
+        </div>
+        <mat-card-title>{{ item.name }}</mat-card-title>
+        <mat-card-subtitle>{{ item.category }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="stock-status-container">
+          <div class="stock-info">
+             <span class="stock-value">{{ item.stockCount }}</span>
+             <span class="stock-label">Units Left</span>
+          </div>
+          <mat-progress-bar 
+            mode="determinate" 
+            [value]="(item.stockCount / 20) * 100" 
+            [color]="item.stockCount <= item.minThreshold ? 'warn' : 'primary'">
+          </mat-progress-bar>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-icon-button color="warn" 
+            (click)="onDeleteItem(item)" 
+            matTooltip="Delete Product">
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+         <button mat-icon-button color="warn" 
+                 (click)="onQuickUpdate(item, -1)" 
+                 matTooltip="Decrease">
+           <mat-icon>remove_circle_outline</mat-icon>
+         </button>
+         
+         <button mat-icon-button color="primary" 
+                 (click)="onQuickUpdate(item, 1)" 
+                 matTooltip="Quick Add">
+           <mat-icon>add_circle_outline</mat-icon>
+         </button>
+      </mat-card-actions>
+    </mat-card>
+  } @empty {
+    <div class="no-results">
+      <mat-icon>inventory_2</mat-icon>
+      <p>No items found matching your search.</p>
+    </div>
+  }
+</div>
