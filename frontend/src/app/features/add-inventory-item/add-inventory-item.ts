@@ -19,9 +19,39 @@ export class AddInventoryItem {
 public newItemService = inject(NewItemService);
 private router = inject(Router);
 
+  // onSubmit() {
+  //   if (this.newItemService.saveNewItem()) {
+  //     this.router.navigate(['/inventory']);
+  //   }
+  // }
+
+  // Track loading state for the UI button
+  public isSubmitting = false;
+
   onSubmit() {
-    if (this.newItemService.saveNewItem()) {
-      this.router.navigate(['/inventory']);
-    }
+    // 1. Trigger the service call
+    const saveRequest = this.newItemService.saveNewItem();
+
+    // 2. If the form was invalid, the service returns null
+    if (!saveRequest) return;
+
+    this.isSubmitting = true;
+
+    // 3. Subscribe to the server response
+    saveRequest.subscribe({
+      next: (response) => {
+        this.isSubmitting = false;
+        console.log('Item saved successfully:', response);
+        this.router.navigate(['/inventory']);
+      },
+      error: (err) => {
+        this.isSubmitting = false;
+        // Global Error Interceptor handles the alert, 
+        // so we just reset the loading state here.
+        console.error('Failed to save item', err);
+      }
+    });
   }
+
+
 }

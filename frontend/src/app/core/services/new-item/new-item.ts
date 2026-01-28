@@ -83,6 +83,7 @@ import inventorySchema from '../../../../assets/data/inventory-schema.json';
 
 // Add this import to your existing service
 import validationMessages from '../../../../assets/data/validation-messages.json';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -131,34 +132,65 @@ export class NewItemService {
    * Validates the form, transforms data to the KiranaItem model,
    * and saves it to the main Inventory state.
    */
-  saveNewItem(): boolean {
-    if (this.form.valid) {
-      // getRawValue includes disabled fields if any exist
-      const formValue = this.form.getRawValue();
+  // saveNewItem(): boolean {
+  //   if (this.form.valid) {
+  //     // getRawValue includes disabled fields if any exist
+  //     const formValue = this.form.getRawValue();
 
-      const newItem: KiranaItem = {
-        id: crypto.randomUUID(),
-        name: formValue.name,
-        category: formValue.category,
-        // Explicit conversion to Number to handle string inputs from type="number"
-        stockCount: Number(formValue.stockCount),
-        minThreshold: Number(formValue.minThreshold),
-        lastUpdated: new Date(),
-      };
+  //     const newItem: KiranaItem = {
+  //       id: crypto.randomUUID(),
+  //       name: formValue.name,
+  //       category: formValue.category,
+  //       // Explicit conversion to Number to handle string inputs from type="number"
+  //       stockCount: Number(formValue.stockCount),
+  //       minThreshold: Number(formValue.minThreshold),
+  //       lastUpdated: new Date(),
+  //     };
 
-      // Persistence layer call
-      this.inventoryService.addItem(newItem);
+  //     // Persistence layer call
+  //     this.inventoryService.addItem(newItem);
       
-      // Revert form to initial default values instead of null
-      this.resetToDefaults();
+  //     // Revert form to initial default values instead of null
+  //     this.resetToDefaults();
       
-      return true;
-    }
+  //     return true;
+  //   }
     
-    // Triggers validation display in UI
-    this.form.markAllAsTouched(); 
-    return false;
+  //   // Triggers validation display in UI
+  //   this.form.markAllAsTouched(); 
+  //   return false;
+  // }
+
+
+
+
+
+
+// ... inside the class
+
+saveNewItem(): Observable<any> | null {
+  if (this.form.valid) {
+    const formValue = this.form.getRawValue();
+
+    // REMOVE crypto.randomUUID() - The Backend (MongoDB) creates the ID!
+    const newItem = {
+      name: formValue.name,
+      category: formValue.category,
+      stockCount: Number(formValue.stockCount),
+      minThreshold: Number(formValue.minThreshold),
+    };
+
+    // Return the observable so the component can .subscribe()
+    return this.inventoryService.addItem(newItem).pipe(
+      tap(() => {
+        this.resetToDefaults(); // Reset only on successful save
+      })
+    );
   }
+  
+  this.form.markAllAsTouched(); 
+  return null; // Return null if the form is invalid
+}
 
   /**
    * Resets the form using the defaultValue keys defined in the JSON schema

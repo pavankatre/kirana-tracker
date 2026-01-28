@@ -8,128 +8,89 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { KiranaItem } from '../../../models/kirana-item';
 import { StockFormService } from '../../services/stock-form';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-stock-form',
   imports: [
     CommonModule, ReactiveFormsModule, MatFormFieldModule, 
-    MatInputModule, MatSelectModule, MatAutocompleteModule, MatButtonModule
+    MatInputModule, MatSelectModule, MatAutocompleteModule, MatButtonModule, MatIconModule
   ],
   templateUrl: './stock-form.html',
   styleUrl: './stock-form.scss',
 })
-// export class StockForm {
-
-// // Use ViewChild to catch the form directive from the HTML
-//   @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
-// // Inject the new service
-//   private formService = inject(StockFormService); 
-//   private fb = inject(FormBuilder);
-
-//   // Signal-based Inputs (Read-only signals)
-//   categories = input.required<string[]>();
-//   items = input.required<KiranaItem[]>();
-
-//   // Signal-based Output
-//   onUpdate = output<{id: string, newQuantity: number}>();
-
-//   filteredItems: KiranaItem[] = [];
-
-//   stockForm = this.fb.group({
-//     category: ['', Validators.required],
-//     itemName: [{ value: '', disabled: true }, Validators.required],
-//     quantity: [{ value: 0, disabled: true }, [Validators.required, Validators.min(1)]]
-//   });
-
-//   get f() { return this.stockForm.controls; }
-
-//   onCategoryChange(cat: string) {
-//     // items() is now a signal, so we call it like a function
-//     this.filteredItems = this.items().filter(i => i.category === cat);
-//     this.stockForm.get('itemName')?.enable();
-//     this.stockForm.get('itemName')?.reset();
-//   }
-
-//   submit() {
-//     if (this.stockForm.valid) {
-//       const selectedItem = this.stockForm.value.itemName as unknown as KiranaItem;
-//       // Emit using the new .emit() syntax
-//       this.onUpdate.emit({
-//         id: selectedItem.id,
-//         newQuantity: this.stockForm.value.quantity || 0
-//       });
-//      // this.stockForm.reset();
-//      // FIX: This clears the values AND removes the red error styling
-//       this.formDirective.resetForm();
-//       // Manually ensure fields are disabled for the next entry
-//     this.stockForm.get('itemName')?.disable();
-//     this.stockForm.get('quantity')?.disable();
-//     }
-//   }
-
-//   displayFn(item: KiranaItem): string {
-//     return item && item.name ? item.name : '';
-//   }
-//   onItemSelect(item: KiranaItem) {
-//   if (item) {
-//     // 1. Enable the quantity field so it's no longer grayed out
-//     this.stockForm.get('quantity')?.enable();
-    
-//     // 2. Set the value to current stock so the user can just edit it
-//     this.stockForm.get('quantity')?.setValue(item.stockCount);
-    
-//     // 3. Mark as touched so validation errors show if they delete the value
-//     this.stockForm.get('quantity')?.markAsTouched();
-//   }
-// }
-// }
-
+  
 
 export class StockForm {
   @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
-  
-  // Inject the new service
   private formService = inject(StockFormService);
 
-  // Keep these as they are the bridge to the parent
   categories = input.required<string[]>();
   items = input.required<KiranaItem[]>();
+  // Match the parent component's expectation
   onUpdate = output<{id: string, newQuantity: number}>();
 
-  // Reference the form from the service
   stockForm = this.formService.form;
   get f() { return this.formService.controls; }
   filteredItems: KiranaItem[] = [];
 
-  onCategoryChange(cat: string) {
-    this.filteredItems = this.formService.getFilteredItems(this.items(), cat);
-    this.f.itemName.enable();
-    this.f.itemName.reset();
-  }
-
-  onItemSelect(item: KiranaItem) {
-    if (item) this.formService.prepareItemSelection(item);
-  }
+ 
 
   submit() {
     if (this.stockForm.valid) {
       const selectedItem = this.stockForm.value.itemName as unknown as KiranaItem;
-      this.onUpdate.emit({
-        id: selectedItem.id,
-        newQuantity: this.stockForm.value.quantity || 0
-      });
+      const addedQty = this.stockForm.value.quantity || 0;
+      
+      // Calculate final total (Current DB stock + New input)
+      const currentStock = Number(selectedItem.stockCount || 0);
+      const finalQuantity = addedQty;
 
-      this.formDirective.resetForm();
-      this.formService.resetFormState();
+      // Use _id for MongoDB compatibility
+      const targetId = selectedItem._id || selectedItem.id;
+
+      if (targetId) {
+        this.onUpdate.emit({
+          id: targetId,
+          newQuantity: finalQuantity
+        });
+
+        // Reset the form professionally
+        this.formDirective.resetForm();
+        this.formService.resetFormState();
+      }
     }
   }
 
   displayFn(item: KiranaItem): string {
     return item?.name ?? '';
   }
+
+  // src/app/shared/components/stock-form/stock-form.ts
+
+onCategoryChange(cat: string) {
+  this.filteredItems = this.formService.getFilteredItems(this.items(), cat);
+  
+  // Enable itemName and reset quantity/itemName states
+  this.f.itemName.enable();
+  this.f.itemName.setValue(''); // Clear previous name
+  this.f.quantity.disable();    // Re-disable quantity until name is picked
 }
 
 
+
+onItemSelect(item: any) {
+  // Check if item is an object and has a name (proving it's a KiranaItem)
+  if (item && typeof item === 'object' && item.name) {
+    this.formService.prepareItemSelection(item);
+    
+    // Explicitly check the control state
+    console.log('Quantity Control Enabled:', this.f.quantity.enabled);
+  } else {
+    // If it's just a string from typing, keep quantity disabled
+    this.f.quantity.disable();
+  }
+}
+}
 
 
 

@@ -32,7 +32,7 @@ export class DashboardTableService {
     if (search) {
       items = items.filter(i => 
         i.name.toLowerCase().includes(search) || 
-        i.id.toLowerCase().includes(search)
+        i.id!.toLowerCase().includes(search)
       );
     }
     return items;

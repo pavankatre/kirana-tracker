@@ -1,4 +1,4 @@
-
+<!-- 
 <form [formGroup]="stockForm" (ngSubmit)="submit()" class="shared-stock-form">
   
   <mat-form-field appearance="outline">
@@ -40,4 +40,47 @@
   <button mat-flat-button color="primary" [disabled]="stockForm.invalid">
     Update Stock
   </button>
+</form> -->
+
+
+<form [formGroup]="stockForm" (ngSubmit)="submit()" class="shared-stock-form">
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select formControlName="category" (selectionChange)="onCategoryChange($event.value)">
+      @for (cat of categories(); track cat) {
+        <mat-option [value]="cat">{{cat}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Item Name</mat-label>
+    <input type="text" matInput formControlName="itemName" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" 
+                      [displayWith]="displayFn" 
+                      (optionSelected)="onItemSelect($event.option.value)">
+      @for (item of filteredItems; track item._id || item.id) {
+        <mat-option [value]="item">
+          {{item.name}} <small>({{item.stockCount}} in stock)</small>
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Add Quantity</mat-label>
+    <input type="number" matInput formControlName="quantity">
+    <mat-hint>Enter amount to add to current stock</mat-hint>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary" [disabled]="stockForm.invalid">
+    <mat-icon>refresh</mat-icon> Update Stock
+  </button>
 </form>
+
+<!-- <pre>
+  Quantity Enabled: {{ !f.quantity.disabled }}
+  Quantity Valid: {{ f.quantity.valid }}
+  Form Value: {{ stockForm.value | json }}
+</pre> -->

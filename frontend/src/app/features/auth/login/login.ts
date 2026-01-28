@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent {
   private router = inject(Router);
   buttonTransform = '';
   isPasswordFocused = false;
+  isLoading = false;
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -41,23 +43,42 @@ export class LoginComponent {
   //   }
   // }
 
-  onLogin() {
-  if (this.loginForm.valid) {
-    // 1. Call the service and SUBSCRIBE to the result
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (response) => {
-        console.log('Login successful:', response);
+//   onLogin() {
+//   if (this.loginForm.valid) {
+//     // 1. Call the service and SUBSCRIBE to the result
+//     this.authService.login(this.loginForm.value).subscribe({
+//       next: (response) => {
+//         console.log('Login successful:', response);
         
-        // 2. Only navigate AFTER the backend confirms success
+//         // 2. Only navigate AFTER the backend confirms success
+//         this.router.navigate(['/inventory']);
+//       },
+//       error: (err) => {
+//         // 3. Handle errors (e.g., wrong password)
+//         console.error('Login failed:', err);
+//         alert(err.error?.message || 'Invalid credentials');
+//       }
+//     });
+//   }
+// }
+
+onLogin() {
+  if (this.loginForm.invalid) return;
+
+  this.isLoading = true; // Block UI
+
+  this.authService.login(this.loginForm.value)
+    .pipe(finalize(() => this.isLoading = false)) // Always runs (success or error)
+    .subscribe({
+      next: (response) => {
+        // No need for alert here, just move to the next screen
         this.router.navigate(['/inventory']);
       },
       error: (err) => {
-        // 3. Handle errors (e.g., wrong password)
-        console.error('Login failed:', err);
-        alert(err.error?.message || 'Invalid credentials');
+        // In a real company, you'd use a SnackBar/Toast, not an alert
+        console.error('Auth Error:', err);
       }
     });
-  }
 }
 
 

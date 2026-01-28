@@ -1,5 +1,6 @@
 export interface KiranaItem {
-  id: string;
+ _id?: string;        // Add this for MongoDB compatibility
+  id?: string;
   name: string;        // e.g., "Lux Soap"
   category: string;    // e.g., "Bath & Body"
   stockCount: number;  // How many you currently have
