@@ -76,7 +76,7 @@ searchTerm = this.viewService.searchTerm;
     const newQuantity = Math.max(0, item.stockCount + change);
     
     // 2. Extract the ID (handle both MongoDB _id and model id)
-    const itemId = item.id || item.id;
+    const itemId = item._id || item.id;
 
     if (!itemId) {
       console.error('Cannot update item: No valid ID found');

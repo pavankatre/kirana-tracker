@@ -43,7 +43,7 @@ export class StockForm {
       
       // Calculate final total (Current DB stock + New input)
       const currentStock = Number(selectedItem.stockCount || 0);
-      const finalQuantity = addedQty;
+      const finalQuantity = currentStock + Number(addedQty);
 
       // Use _id for MongoDB compatibility
       const targetId = selectedItem._id || selectedItem.id;

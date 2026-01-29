@@ -1,5 +1,13 @@
 
 
+
+
+<app-stock-form 
+  [categories]="categories()" 
+  [items]="inventoryService.items()" 
+  (onUpdate)="handleStockUpdate($event)">
+</app-stock-form>
+
 <div class="header-actions">
   <mat-form-field appearance="outline" class="search-bar">
     <mat-label>Search Inventory (Name or Category)</mat-label>
@@ -11,12 +19,6 @@
     <mat-icon>add</mat-icon>
   </button>
 </div>
-
-<app-stock-form 
-  [categories]="categories()" 
-  [items]="inventoryService.items()" 
-  (onUpdate)="handleStockUpdate($event)">
-</app-stock-form>
 
 <div class="inventory-grid">
   @for (item of filteredItems(); track item._id || item.id || item.name) {
