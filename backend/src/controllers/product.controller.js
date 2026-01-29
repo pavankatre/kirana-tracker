@@ -1,5 +1,5 @@
 const productService = require('../services/product.service');
-
+const { sendLowStockAlert } = require('../utils/mailer');
 exports.addProduct = async (req, res, next) => {
     try {
         // Defensive check
@@ -82,6 +82,11 @@ exports.updateStock = async (req, res, next) => { // Added next here
         const { stockCount } = req.body;
 
         const updatedProduct = await productService.updateProductStock(id, stockCount);
+
+        // CHECK: If stock is at or below threshold, send email
+//   if (updatedProduct.stockCount <= updatedProduct.minThreshold) {
+//     await sendLowStockAlert(updatedProduct.name, updatedProduct.stockCount);
+//   }
 
         if (!updatedProduct) {
             return res.status(404).json({ 
