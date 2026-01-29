@@ -24,7 +24,13 @@ export class Header implements OnInit {
 currentUser = signal<string | null>(localStorage.getItem('user.username'));
 
 ngOnInit() {
-  this.currentUser.set( this.storeService.getUserFromStorage().username);
+  const user = this.storeService.getUserFromStorage();
+  console.log('Current User:', user);
+  if (user && user.username) {
+    this.currentUser.set(user.username);
+  } else {
+    this.currentUser.set('Guest'); // Or handle the redirect to login here
+  }
 }
 
 onLogout() {
