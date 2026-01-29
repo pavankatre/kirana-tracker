@@ -18,6 +18,7 @@ constructor(private httpService: HttpService) {}
   logout() {
     // Future: return this.http.post('/api/logout');
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.store.removeUser();
   }
 

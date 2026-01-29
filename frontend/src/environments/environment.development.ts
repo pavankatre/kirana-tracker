@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://kirana-tracker.onrender.com/api' // ✅ Add this
+  apiUrl: 'https://kirana-tracker.onrender.com/api' // ✅ Add this http://localhost:10000/api
+ // apiUrl: 'http://localhost:10000/api' // Base URL only
 };

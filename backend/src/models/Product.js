@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     category: { 
         type: String, 
         required: true, 
-        enum: ["Groceries", "Dairy", "Household"] 
+        enum: ['Groceries', 'Dairy', 'Household', 'Vegetables', 'Fruits', 'Personal Care'] 
     },
     stockCount: { 
         type: Number, 

@@ -17,7 +17,7 @@ export class UserStorageService {
     this.currentUser.set(null);
   }
 
-  private getUserFromStorage(): any {
+   getUserFromStorage(): any {
     const user = localStorage.getItem(this.USER_KEY);
     console.log('Retrieved user from storage:', user);
     return user ? JSON.parse(user) : null;

@@ -4,7 +4,7 @@
   // This makes the grid responsive: 1 column on mobile, 3+ on desktop
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
-  padding: 8px;
+  padding: 10px;
 }
 
 // Styling for each item card
@@ -127,6 +127,42 @@ mat-card-actions {
   z-index: 1000;
   // Optional: adds a slight glow if there is low stock
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.header-actions {
+  margin: 16px 0;
+  display: flex;
+  justify-content: center; // Centers the search bar in the container
+  padding: 10px;
+  
+  .search-bar {
+    width: 100%;
+    max-width: 600px; // Prevents it from becoming too wide on desktop
+    
+    // Customizing the Material Outline appearance
+    ::ng-deep .mat-mdc-text-field-wrapper {
+      background-color: #ffffff !important; // Clean white background
+      border-radius: 12px !important;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); // Soft elevation
+    }
+
+    // Hover effect
+    &:hover ::ng-deep .mat-mdc-text-field-wrapper {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    // Changing the Icon color
+    mat-icon {
+      color: #3f51b5; // Matches your primary theme
+      margin-right: 8px;
+    }
+
+    // Removing the default Material bottom spacing
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      display: none; 
+    }
+  }
 }
 
 .inventory-grid {
