@@ -72,27 +72,27 @@
   <hr>
 
   @if (isStarterPackEnabled()) {
-    <div class="starter-section">
-      <app-starter-pack (itemSelected)="quickAddFromStarter($event)"></app-starter-pack>
-    </div>
+  <div class="starter-section">
+    <app-starter-pack (itemSelected)="quickAddFromStarter($event)"></app-starter-pack>
+  </div>
   
-
+  
   <div class="inventory-main">
     <div class="header-actions">
-       </div>
-
-    <div class="inventory-grid">
-      @for (item of filteredItems(); track item._id || item.id) {
-         <mat-card class="item-card">...</mat-card>
-      } @empty {
-        <div class="empty-state">
-           <mat-icon>inventory_2</mat-icon>
-           <p>No items found. Use the Quick-Add section above or add manually.</p>
-        </div>
-      }
     </div>
+  
+    <!-- <div class="inventory-grid">
+      @for (item of filteredItems(); track item._id || item.id) {
+      <mat-card class="item-card">...</mat-card>
+      } @empty {
+      <div class="empty-state">
+        <mat-icon>inventory_2</mat-icon>
+        <p>No items found. Use the Quick-Add section above or add manually.</p>
+      </div>
+      }
+    </div> -->
   </div>
-}
+  }
 </div>
 
 <div class="inventory-grid">
