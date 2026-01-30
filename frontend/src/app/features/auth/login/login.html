@@ -1,122 +1,3 @@
-<!-- <div class="login-wrapper">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>Kirana Tracker Login</mat-card-title>
-    </mat-card-header>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <mat-card-content> -->
-        <!-- <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" placeholder="admin@kirana.com">
-          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-            <mat-error>Please enter a valid email</mat-error>
-          }
-        </mat-form-field> -->
-
-        <!-- <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password">
-        </mat-form-field> -->
-        <!-- <mat-form-field appearance="outline" class="full-width">
-  <mat-label>Email</mat-label>
-  <input matInput formControlName="email" type="email" >
-  
-  @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-    <mat-error>{{ getErrorMessage('email') }}</mat-error>
-  }
-</mat-form-field>
-
-<mat-form-field appearance="outline" class="full-width">
-  <mat-label>Password</mat-label>
-  <input matInput formControlName="password" type="password">
-  
-  @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-    <mat-error>{{ getErrorMessage('password') }}</mat-error>
-  }
-</mat-form-field>
-
-      </mat-card-content>
-
-      <mat-card-actions> -->
-        <!-- <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit">
-          Login
-        </button> -->
-        <!-- <button 
-  mat-raised-button 
-  color="primary" 
-  type="submit"
-  [style.transform]="buttonTransform"
-  (mouseenter)="moveButton()"
-  [disabled]="false"> Login
-</button>
-        <button mat-button type="button" (click)="goToRegister()">
-          Create Account
-        </button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
-</div> -->
-
-
-<!-- <div class="login-wrapper">
-  
-
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>Kirana Tracker Login</mat-card-title>
-    </mat-card-header>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <mat-card-content>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email">
-          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-            <mat-error>{{ getErrorMessage('email') }}</mat-error>
-          }
-        </mat-form-field>
-<div class="puppy-container">
-    <div class="puppy" [class.covering-eyes]="isPasswordFocused">
-      <div class="ear left"></div>
-      <div class="ear right"></div>
-      <div class="face">
-        <div class="eye left"><div class="pupil"></div></div>
-        <div class="eye right"><div class="pupil"></div></div>
-        <div class="nose"></div>
-        <div class="mouth"></div>
-      </div>
-      <div class="hand left"></div>
-      <div class="hand right"></div>
-    </div>
-  </div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput 
-                 formControlName="password" 
-                 type="password"
-                 (focus)="isPasswordFocused = true"
-                 (blur)="isPasswordFocused = false">
-          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-            <mat-error>{{ getErrorMessage('password') }}</mat-error>
-          }
-        </mat-form-field>
-      </mat-card-content>
-
-      <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit"
-          [style.transform]="buttonTransform"
-          (mouseenter)="moveButton()"> Login
-        </button>
-        <button mat-button type="button" (click)="goToRegister()">
-          Create Account
-        </button>
-      </mat-card-actions>
-    </form>
-  </mat-card>
-</div> -->
-
-
 <div class="login-wrapper">
   <div class="login-container">
     
@@ -144,27 +25,42 @@
         <mat-card-content>
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email</mat-label>
-            <!-- <mat-icon matPrefix>email</mat-icon>  -->
-            <input matInput formControlName="email" type="email">
+            <input matInput formControlName="email" type="email" placeholder="shop@example.com">
+            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+              <mat-error>
+                @if (loginForm.get('email')?.errors?.['required']) { Email is required }
+                @if (loginForm.get('email')?.errors?.['email']) { Enter a valid email address }
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Password</mat-label>
-            <!-- <mat-icon matPrefix>lock</mat-icon> -->
             <input matInput 
                    formControlName="password" 
                    type="password"
                    (focus)="isPasswordFocused = true"
                    (blur)="isPasswordFocused = false">
+            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+              <mat-error>
+                @if (loginForm.get('password')?.errors?.['required']) { Password is required }
+                @if (loginForm.get('password')?.errors?.['minlength']) { Password must be at least 6 characters }
+                @if (loginForm.get('password')?.errors?.['maxlength']) { Password cannot exceed 20 characters }
+              </mat-error>
+            }
           </mat-form-field>
         </mat-card-content>
 
         <mat-card-actions>
-          <button mat-raised-button color="primary" class="login-btn" type="submit"
-            [style.transform]="buttonTransform"
-            (mouseenter)="moveButton()"> 
+          <button mat-raised-button 
+                  color="primary" 
+                  class="login-btn" 
+                  type="submit"
+                  [disabled]="loginForm.invalid"
+                  [style.transform]="buttonTransform"> 
             Login
           </button>
+          
           <button mat-button class="reg-btn" type="button" (click)="goToRegister()">
             New here? Create Account
           </button>

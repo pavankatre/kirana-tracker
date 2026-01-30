@@ -1,0 +1,29 @@
+<div class="starter-wrapper">
+  <div class="header-section">
+    <mat-icon color="primary" class="main-icon">storefront</mat-icon>
+    <h1>Welcome to your Shop!</h1>
+    <p>Your inventory is currently empty. Tap items to add them instantly.</p>
+  </div>
+
+  <div class="items-grid">
+    @for (item of starterItems; track item.name) {
+      <mat-card class="product-card" appearance="outlined">
+        <mat-card-header>
+          <div class="category-chip">
+            <span class="chip-text">{{ item.category }}</span>
+          </div>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <h3 class="product-name">{{ item.name }}</h3>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-mini-fab color="primary" [disabled]="isAdded(item.name)" (click)="onAdd(item)" aria-label="Add item">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    }
+  </div>
+</div>

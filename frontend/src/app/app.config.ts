@@ -4,6 +4,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { errorInterceptor } from './core/interceptors/error/error-interceptor';
 import { authInterceptor } from './core/interceptors/auth/auth-interceptor';
+import { loadingInterceptor } from './core/interceptors/loading/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +16,7 @@ export const appConfig: ApplicationConfig = {
       withHashLocation() // Highly recommended for GitHub Pages to prevent 404s
     ),
     provideHttpClient(
-      withInterceptors([authInterceptor,errorInterceptor]) // Register it here!
+      withInterceptors([loadingInterceptor,authInterceptor,errorInterceptor]) // Register it here!
     ),
     
   ]

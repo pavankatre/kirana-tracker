@@ -20,6 +20,81 @@
   </button>
 </div>
 
+
+<!-- @if (inventoryService.items().length === 0) {
+  <app-starter-pack (itemSelected)="quickAddFromStarter($event)"></app-starter-pack>
+} @else {
+  <div class="inventory-grid">
+    @for (item of filteredItems(); track item._id || item.id || item.name) {
+       <mat-card class="item-card" ...>
+         ...
+       </mat-card>
+    } @empty {
+      <div class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <p>No items found matching "{{ searchTerm() }}"</p>
+      </div>
+    }
+  </div>
+} -->
+
+<!-- @if (inventoryService.items().length === 0) {
+  <app-starter-pack (itemSelected)="quickAddFromStarter($event)"></app-starter-pack>
+} @else {
+  <div class="inventory-grid">
+    @for (item of filteredItems(); track item._id || item.id) {
+       <mat-card class="item-card">...</mat-card>
+    } @empty {
+      <div class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <p>No items found matching "{{ searchTerm() }}"</p>
+      </div>
+    }
+  </div>
+} -->
+
+
+<div class="inventory-container">
+  
+  <div class="header-row">
+    <h2>Inventory Management</h2>
+    
+    <div class="controls">
+      <mat-slide-toggle 
+        [checked]="isStarterPackEnabled()" 
+        (change)="toggleStarterPack()"
+        color="primary">
+        Show Quick-Add Items
+      </mat-slide-toggle>
+    </div>
+  </div>
+
+  <hr>
+
+  @if (isStarterPackEnabled()) {
+  <div class="starter-section">
+    <app-starter-pack (itemSelected)="quickAddFromStarter($event)"></app-starter-pack>
+  </div>
+  
+  
+  <div class="inventory-main">
+    <div class="header-actions">
+    </div>
+  
+    <!-- <div class="inventory-grid">
+      @for (item of filteredItems(); track item._id || item.id) {
+      <mat-card class="item-card">...</mat-card>
+      } @empty {
+      <div class="empty-state">
+        <mat-icon>inventory_2</mat-icon>
+        <p>No items found. Use the Quick-Add section above or add manually.</p>
+      </div>
+      }
+    </div> -->
+  </div>
+  }
+</div>
+
 <div class="inventory-grid">
   @for (item of filteredItems(); track item._id || item.id || item.name) {
     <mat-card class="item-card" [class.low-stock-alert]="item.stockCount <= item.minThreshold">

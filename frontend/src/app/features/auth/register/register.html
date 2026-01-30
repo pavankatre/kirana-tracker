@@ -48,6 +48,7 @@
           <mat-error>
             @if (registerForm.get('username')?.hasError('required')) { Username is required }
             @if (registerForm.get('username')?.hasError('minlength')) { Minimum 3 characters needed }
+            @if (registerForm.get('username')?.hasError('maxlength')) { Maximum 20 characters allowed }
           </mat-error>
         }
       </mat-form-field>
@@ -70,6 +71,7 @@
           <mat-error>
             @if (registerForm.get('password')?.hasError('required')) { Password is required }
             @if (registerForm.get('password')?.hasError('minlength')) { Must be at least 6 characters }
+            @if (registerForm.get('password')?.hasError('maxlength')) { Maximum 20 characters allowed }
           </mat-error>
         }
       </mat-form-field>
