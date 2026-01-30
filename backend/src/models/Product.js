@@ -9,7 +9,11 @@ const productSchema = new mongoose.Schema({
     category: { 
         type: String, 
         required: true, 
-        enum: ['Groceries', 'Dairy', 'Household', 'Vegetables', 'Fruits', 'Personal Care'] 
+       // Added 'Snacks', 'Instant Food', and 'Baby Care'
+        enum: [
+            'Groceries', 'Grains', 'Dairy', 'Vegetables', 'Fruits',
+            'Personal Care', 'Household', 'Snacks', 'Instant Food', 'Baby Care'
+        ]
     },
     stockCount: { 
         type: Number, 
@@ -19,7 +23,7 @@ const productSchema = new mongoose.Schema({
     minThreshold: { 
         type: Number, 
         required: true, 
-        default: 2 
+        default: 1 
     },
     // We link the product to the user who created it
     userId: { 
