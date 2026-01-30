@@ -32,35 +32,10 @@ export class LoginComponent {
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]]
+    password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
   });
 
-  // onLogin() {
-  //   if (this.loginForm.valid) {
-  //     this.authService.login(this.loginForm.value);
-  //     // Navigate to dashboard or return URL after successful login
-  //     this.router.navigate(['/inventory']);
-  //   }
-  // }
-
-//   onLogin() {
-//   if (this.loginForm.valid) {
-//     // 1. Call the service and SUBSCRIBE to the result
-//     this.authService.login(this.loginForm.value).subscribe({
-//       next: (response) => {
-//         console.log('Login successful:', response);
-        
-//         // 2. Only navigate AFTER the backend confirms success
-//         this.router.navigate(['/inventory']);
-//       },
-//       error: (err) => {
-//         // 3. Handle errors (e.g., wrong password)
-//         console.error('Login failed:', err);
-//         alert(err.error?.message || 'Invalid credentials');
-//       }
-//     });
-//   }
-// }
+ 
 
 onLogin() {
   if (this.loginForm.invalid) return;
@@ -102,15 +77,5 @@ onLogin() {
     this.router.navigate(['/register']);
   }
 
-  moveButton() {
-    // Only move if the form is invalid
-    if (this.loginForm.invalid) {
-      const x = Math.floor(Math.random() * 200) - 100; // Move between -100px and 100px
-      const y = Math.floor(Math.random() * 100) - 75;  // Move between -50px and 50px
-      this.buttonTransform = `translate(${x}px, ${y}px)`;
-    } else {
-      // Reset position if form becomes valid
-      this.buttonTransform = 'translate(0, 0)';
-    }
-}
+
 }

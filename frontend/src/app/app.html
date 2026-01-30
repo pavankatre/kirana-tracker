@@ -1,5 +1,10 @@
 <app-header></app-header>
-
+@if (loadingService.loading()) {
+  <div class="global-loader-overlay">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+    <p>Loading...</p>
+  </div>
+}
 <main class="main-container">
   <router-outlet></router-outlet>
 </main>

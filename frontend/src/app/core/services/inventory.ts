@@ -133,7 +133,7 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { KiranaItem } from '../../models/kirana-item';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
@@ -177,29 +177,6 @@ export class InventoryService {
     );
   }
 
-  /**
-   * UPDATE STOCK: For Add/Consume buttons
-   * Note: In a real app, you should make a PATCH request to the DB here
-   */
-  // updateStock(id: string, newQuantity: number): Observable<any> {
-  //   console.log(`Updating stock for ID: ${id} to new quantity: ${newQuantity}`);
-  //   // API call to persist the change
-  //   return this.http.patch(`${this.API_URL}/update-stock/${id}`, { stockCount: newQuantity }).pipe(
-  //     tap(() => {
-  //       // Sync the local signal so the UI updates immediately
-  //       this.itemsSignal.update(items =>
-  //         items.map(item =>
-  //           item.id === id ? { ...item, stockCount: newQuantity, lastUpdated: new Date() } : item
-  //         )
-  //       );
-  //     })
-  //   );
-  // }
-
-  // src/app/core/services/inventory.service.ts
-
-// src/app/core/services/inventory.ts
-
 updateStock(id: string, newStock: number) {
   return this.http.patch<any>(`${this.API_URL}/update-stock/${id}`, { stockCount: newStock })
     .pipe(
@@ -228,4 +205,11 @@ deleteItem(id: string) {
       })
     );
 }
+
+isItemAlreadyInInventory(itemName: string): boolean {
+  return this.items().some(
+    existingItem => existingItem.name.toLowerCase() === itemName.toLowerCase()
+  );
+}
+
 }

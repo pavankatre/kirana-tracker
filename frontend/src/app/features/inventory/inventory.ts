@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -13,10 +13,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InventoryViewService } from './service/inventory-view';
 import { RouterModule } from '@angular/router';
+import { StarterPackComponent } from './components/starter-pack/starter-pack';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-inventory',
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule , StockForm , MatFormFieldModule , MatInputModule ,MatProgressBarModule, MatTooltipModule , RouterModule ],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatChipsModule , StockForm , MatFormFieldModule , 
+    MatInputModule ,MatProgressBarModule, MatTooltipModule , RouterModule  , StarterPackComponent , MatSlideToggleModule],
   providers: [InventoryViewService],
   templateUrl: './inventory.html',
   styleUrl: './inventory.scss',
@@ -33,6 +37,9 @@ searchTerm = this.viewService.searchTerm;
   filteredItems = this.viewService.filteredItems;
   categories = this.viewService.categories;
 
+  // This signal controls if the starter pack is shown or hidden
+  isStarterPackEnabled = signal<boolean>(true);
+
   ngOnInit() {
     // 1. Fetch data from MongoDB on load
     this.inventoryService.getInventory().subscribe({
@@ -40,8 +47,29 @@ searchTerm = this.viewService.searchTerm;
       // The Service Signal updates automatically via 'tap', 
       // so we don't need 'next' logic here.
     });
+
+
+    // 1. Check if user previously disabled it
+    const savedPreference = localStorage.getItem('kirana_starter_enabled');
+    if (savedPreference !== null) {
+      this.isStarterPackEnabled.set(savedPreference === 'true');
+    }
+    
+    this.loadInventory();
   }
 
+loadInventory() {
+    this.inventoryService.getInventory().subscribe({
+      next: (data) => console.log('Inventory loaded:', data),
+      error: (err) => console.error('Error fetching data:', err)
+    });
+  }
+  // Toggle function for the user
+  toggleStarterPack() {
+    const newValue = !this.isStarterPackEnabled();
+    this.isStarterPackEnabled.set(newValue);
+    localStorage.setItem('kirana_starter_enabled', newValue.toString());
+  }
   handleStockUpdate(event: {id: string, newQuantity: number}) {
     // 2. Subscribe to the PATCH request
     this.inventoryService.updateStock(event.id, event.newQuantity).subscribe({
@@ -133,6 +161,22 @@ onDeleteItem(item: KiranaItem) {
     });
   }
 }
+
+
+// Add this method inside your Inventory class
+quickAddFromStarter(starterItem: Partial<KiranaItem>) {
+    const newItem: KiranaItem = {
+      name: starterItem.name ?? 'Unknown Item',
+      category: starterItem.category ?? 'General',
+      stockCount: 0,
+      minThreshold: 2
+    };
+
+    this.inventoryService.addItem(newItem).subscribe({
+      next: (res) => console.log(`${res.name} added!`),
+      error: (err) => console.error('Add failed:', err)
+    });
+  }
 }
 
 
